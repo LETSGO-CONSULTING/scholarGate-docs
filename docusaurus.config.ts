@@ -9,10 +9,10 @@ const config: Config = {
 
     future: { v4: true },
 
-    url: 'https://your-domain.com',
-    baseUrl: '/',
+    url: 'https://letsgo-consulting.github.io',
+    baseUrl: '/scholarGate-docs/',
 
-    organizationName: 'LETSGO-Automation',
+    organizationName: 'LETSGO-CONSULTING',
     projectName: 'scholarGate-docs',
 
     onBrokenLinks: 'throw',
