@@ -1,0 +1,22 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">scholarGate Logo</title>
+  <desc id="desc">Minimal logo with a gate and book mark for scholarGate school management platform</desc>
+  <defs>
+    <style>
+      .bg { fill: #1450A3; }
+      .gate { fill: #FFFFFF; }
+      .accent { fill: #00B894; }
+    </style>
+  </defs>
+
+  <rect x="16" y="16" width="224" height="224" rx="40" class="bg"/>
+
+  <rect x="72" y="88" width="20" height="96" class="gate" rx="6"/>
+  <rect x="164" y="88" width="20" height="96" class="gate" rx="6"/>
+
+  <path class="gate" d="M72 96 Q128 52 212 96 L212 112 Q128 68 72 112 Z"/>
+
+  <rect x="116" y="108" width="24" height="76" rx="6" class="accent"/>
+
+  <circle cx="128" cy="98" r="6" class="gate"/>
+</svg>
