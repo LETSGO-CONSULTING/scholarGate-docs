@@ -6,45 +6,92 @@ sidebar_label: Auth
 
 # Authentication & Authorization
 
-The **Auth module** is responsible for user authentication, session management and authorization.
+**Stateless JWT-based auth** via Spring Security. No sessions stored server-side.
 
-## Authentication Methods
+## Auth Endpoints
 
-Supported login flows:
+```
+POST /api/v1/auth/register          Register new user
+POST /api/v1/auth/login             Login (returns access + refresh tokens)
+POST /api/v1/auth/login/superadmin  Super admin login (no tenant header required)
+POST /api/v1/auth/refresh           Refresh access token
+```
 
-- **Email / username + password**
-- **Google login** (OAuth2)
-- **Apple login** (planned)
+All other `/api/v1/**` endpoints require a valid Bearer token.
 
-All tokens are issued as **JWTs** with:
+## Token Format
 
-- Subject (`sub`) = user identifier
-- Tenant identifier (`tenant_id`)
-- Roles and/or permissions
-- Standard token metadata (issued at, expiration, etc.)
+```http
+Authorization: Bearer <access_token>
+```
 
-## Refresh Tokens
+**JWT Payload includes:**
+- `sub` — user ID
+- `tenant_id` — tenant context
+- `roles` / `authorities` — RBAC grants
+- `iat`, `exp` — issued at / expiration
 
-- Short-lived access tokens.
-- Long-lived refresh tokens stored in the database.
-- Ability to revoke refresh tokens per user/device.
+**TTLs (configurable via env vars):**
+- Access token: **15 minutes** (default)
+- Refresh token: **7 days** (default)
 
-## Password Policies
+## Filter Chain
 
-- Minimum length and complexity.
-- Secure hashing using modern algorithms.
-- No storage of plain-text passwords.
+```
+Request
+  │
+  ├─► TenantFilter           → reads X-Tenant-ID header → sets TenantContext
+  ├─► TenantAccessGuardFilter → validates tenant is active
+  ├─► JwtAuthenticationFilter → validates JWT, sets SecurityContext
+  │
+  └─► Controller
+```
 
-## Authorization
+## Public Routes (no auth required)
 
-- Role-based access control (RBAC) as the initial model.
-- Roles are tenant-scoped (e.g. `TENANT_ADMIN`, `TEACHER`, `STUDENT`, `GUARDIAN`).
-- Certain operations may also use **fine-grained permissions** in the future.
+```
+/api/v1/health
+/api/v1/auth/**
+/actuator/**
+/swagger-ui/**
+/v3/api-docs/**
+```
 
-## Security Considerations
+## Protected Routes
 
-- All auth endpoints must be rate-limited.
-- Brute-force protection on login endpoints.
-- Audit trails for security-sensitive operations (password changes, role changes, etc.).
+| Pattern | Requirement |
+|---|---|
+| `/api/v1/platform/**` | `SUPER_ADMIN` role |
+| `/api/v1/**` (all others) | Any authenticated user |
 
-This document defines the baseline for the Auth module and should be kept in sync with security requirements.
+## Multi-tenant Header
+
+Every request to tenant-scoped endpoints must include:
+
+```http
+X-Tenant-ID: your-tenant-id
+```
+
+The `TenantFilter` extracts this and stores it in thread-local context. All JPA queries then automatically filter by `tenant_id`.
+
+## RBAC
+
+Roles are tenant-scoped. Default seeded roles:
+
+| Role | Description |
+|---|---|
+| `ADMIN` | Full access to tenant resources |
+| `TEACHER` | Academic: grades, attendance, schedules |
+| `TUTOR` | Limited academic view |
+| `STUDENT` | Grade portal, resources |
+| `PARENT` | Guardian view |
+| `SUPER_ADMIN` | Platform-level, cross-tenant |
+
+Fine-grained permission evaluation via `SecurityACLService` and `PermissionEvaluatorService`.
+
+## Password & Session Notes
+
+- Passwords hashed with BCrypt
+- No plain-text storage
+- Sessions are stateless — revocation via refresh token invalidation
+- User invitation flow: `POST /api/v1/user-invitations`

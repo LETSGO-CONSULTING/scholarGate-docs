@@ -27,6 +27,7 @@ const sidebars: SidebarsConfig = {
             items: [
                 'backend/backend-structure',
                 'backend/backend-auth',
+                'backend/backend-roles-access-matrix',
                 'backend/backend-tenant-module',
                 'backend/backend-database-layer',
             ],
@@ -69,6 +70,7 @@ const sidebars: SidebarsConfig = {
                 'api/api-rest-guidelines',
                 'api/api-errors',
                 'api/api-authentication',
+                'api/api-endpoints',
             ],
         },
 

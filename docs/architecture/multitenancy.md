@@ -6,57 +6,91 @@ sidebar_label: Multitenancy
 
 # Multitenancy Design
 
-scholarGate is **multi-tenant by design**. A single platform hosts many schools (tenants), while keeping strict data isolation.
+scholarGate is **multi-tenant by design**. A single deployment hosts many schools, with strict data isolation per tenant.
 
 ## Tenant Model
 
-Core concepts:
+```
+Platform (SUPER_ADMIN)
+  └── Tenant (School / Institution)
+        ├── Branch (Campus / Location)
+        │     └── Academic Offerings
+        └── Users (Admin, Teacher, Student, Parent...)
+```
 
-- **Tenant** – represents a school or institution.
-- **Branch** – represents a campus, building or logical subdivision of a tenant.
-- **User** – always belongs to a tenant; may be linked to one or more branches.
+- **Tenant** — represents a school or institution
+- **Branch** — campus or logical subdivision within a tenant
+- **User** — always belongs to exactly one tenant
 
 ## Isolation Strategy
 
-The initial strategy is **shared database with tenant discriminator**:
+**Shared database, row-level isolation via `tenant_id`:**
 
-- A single PostgreSQL database.
-- Every tenant-owned table includes a `tenant_id` (and often `branch_id`) column.
-- All queries must filter by `tenant_id` (enforced in the data access layer).
-
-In the future, high-volume tenants may be migrated to **separate databases** if required.
+- Single PostgreSQL instance
+- All tenant-owned tables have a `tenant_id` column (and often `branch_id`)
+- `TenantScopedEntity` base class auto-injects `tenant_id` on all queries
+- Hibernate filters applied at the persistence layer — no manual filtering needed in services
 
 ## Tenant Resolution
 
-Tenant is resolved from:
+Every authenticated request provides the tenant via:
 
-- The authenticated user's context (preferred).
-- The request domain or subdomain (e.g. `schoolA.scholargate.app`).
-- Explicit headers in system-to-system calls.
+```http
+X-Tenant-ID: <tenant-identifier>
+```
 
-## Access Control
+**Filter pipeline:**
+1. `TenantFilter` — reads `X-Tenant-ID` header, stores in `TenantContext` (thread-local)
+2. `TenantAccessGuardFilter` — validates tenant exists and is active
+3. All downstream services read from `TenantContext` — no explicit parameter passing
 
-- Every request runs within a **tenant context**.
-- Services are responsible for ensuring that all operations are tenant-scoped.
-- Admin users may have **cross-tenant** visibility, but this must be explicitly handled and audited.
+**Platform tenant** (`PLATFORM_TENANT_ID`) is a special tenant used exclusively by `SUPER_ADMIN` users for cross-tenant operations.
 
-## Configuration per Tenant
+## Entity Base Classes
 
-Tenants may override or configure:
+```java
+// All entities
+class BaseEntity {
+    UUID id;
+    Instant createdAt;
+    Instant updatedAt;
+}
 
-- Branding (logo, colors, name).
-- Localization defaults (language, date formats).
-- Enabled modules and features.
-- Academic settings (grading scale, periods, schedules).
+// Tenant-scoped entities (majority)
+class TenantScopedEntity extends BaseEntity {
+    String tenantId;   // auto-set from TenantContext
+}
+```
 
-All configuration is stored in tenant-aware tables to keep full separation.
+## Per-Tenant Configuration
 
-## Data Migration & Offboarding
+Tenants can configure independently:
 
-Procedures must exist for:
+| Category | Examples |
+|---|---|
+| Branding | Logo, name, colors |
+| Academic | Grading scales, periods, school year, shifts |
+| Preferences | Student code format, schedule windows |
+| Modules | Enable/disable feature modules |
+| Navigation | Dynamic menu per role |
+| Plans | Subscription tier controls feature access |
 
-- Tenant provisioning and initial setup.
-- Exporting tenant data on request.
-- Safely deactivating or deleting a tenant while keeping audit trails when required.
+## Access Control Rules
 
-This document is the reference for all multi-tenant decisions and must stay aligned with implementation.
+- Every service operation is automatically scoped to the current tenant
+- `SUPER_ADMIN` role can operate cross-tenant via `/api/v1/platform/**`
+- Cross-tenant reads are explicitly handled and audit-logged
+- Branch-level isolation applies where relevant (academic offerings, schedules)
+
+## Tenant Lifecycle
+
+| State | Description |
+|---|---|
+| Active | Normal operation |
+| Inactive | Login blocked, data preserved |
+| Suspended | Platform admin action |
+
+Operations available via `/api/v1/platform/tenants`:
+- Create, activate, deactivate tenant
+- View usage metrics per tenant
+- Manage tenant users (platform-level)

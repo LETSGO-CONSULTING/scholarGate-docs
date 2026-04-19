@@ -6,46 +6,91 @@ sidebar_label: Overview
 
 # Architecture Overview
 
-This document provides a high-level view of the **scholarGate** architecture.
+scholarGate is a **modular monolith** with hexagonal architecture and full multi-tenant support. Each domain module is self-contained but shares the same deployment unit.
 
-## High-Level Diagram
+## System Components
 
-At a conceptual level, the platform is composed of:
-
-- **API Gateway / Edge Layer**
-- **Authentication & Authorization service**
-- **Core backend services** (users, tenants, branches, academic, billing, notifications, etc.)
-- **Frontend applications** (admin portal, teacher portal, student/guardian portal)
-- **Database layer** (PostgreSQL) with multi-tenant support
-- **Messaging / Event bus** for async communication
-- **File storage** for documents and assets
-- **Observability stack** (logs, metrics, traces)
-
-> The detailed diagrams (C4 model: Context, Container, Component) should be added here as the system evolves.
+```
+                    ┌──────────────────────────────────┐
+                    │        Angular 19 Frontend        │
+                    │   (Fuse + Material + Tailwind)    │
+                    └──────────────┬───────────────────┘
+                                   │ REST + Bearer JWT
+                                   │ X-Tenant-ID header
+                    ┌──────────────▼───────────────────┐
+                    │     Spring Boot 3.3.3 API         │
+                    │                                   │
+                    │  TenantFilter                     │
+                    │  TenantAccessGuardFilter          │
+                    │  JwtAuthenticationFilter          │
+                    │                                   │
+                    │  ┌──────────┐  ┌──────────────┐  │
+                    │  │ Academic │  │   Platform   │  │
+                    │  │ (20 mod) │  │  (15 mod)    │  │
+                    │  └──────────┘  └──────────────┘  │
+                    │  ┌──────────┐  ┌──────────────┐  │
+                    │  │ Finance  │  │  Security    │  │
+                    │  │ Payments │  │  RBAC / ACL  │  │
+                    │  └──────────┘  └──────────────┘  │
+                    └──────────────┬───────────────────┘
+                                   │
+             ┌─────────────────────┼─────────────────────┐
+             │                     │                     │
+      ┌──────▼──────┐   ┌──────────▼────────┐  ┌────────▼─────┐
+      │ PostgreSQL  │   │       Redis        │  │  File Store  │
+      │  (Flyway)   │   │   (Cache layer)    │  │  (uploads/)  │
+      └─────────────┘   └───────────────────┘  └──────────────┘
+```
 
 ## Architectural Style
 
-- **Microservice-friendly modular monolith** to start, with a clear path to service extraction.
-- **Hexagonal / Ports & Adapters** for core services where applicable.
-- **RESTful APIs** with consistent conventions.
-- **Event-driven patterns** for long-running or cross-module workflows.
+**Hexagonal (Ports & Adapters)** per module:
+- `api/` — inbound adapters (REST controllers, DTOs)
+- `application/` — use cases, business orchestration
+- `domain/` — entities, business rules, repository interfaces
 
-## Main Modules
+Domain logic is decoupled from Spring/JPA/HTTP, making each module independently testable.
 
-- **Auth** – login, registration, JWT, refresh tokens, OAuth providers.
-- **Tenant** – tenant lifecycle, configuration, branding.
-- **Branch** – physical or virtual branches within a tenant.
-- **User** – user profiles, roles and permissions.
-- **Academic** – courses, subjects, schedules, grades.
-- **Finance** – billing, payments, receipts.
-- **Communication** – emails, notifications, messaging.
+## Module Count
 
-## Non-Functional Requirements
+| Category | Count |
+|---|---|
+| Academic domain | 20 |
+| Platform / business | 15 |
+| Security (RBAC, ACL, roles) | 3 |
+| Cross-cutting (common) | 4 |
+| **Total** | **~42** |
 
-- **Scalability** – horizontal scaling where possible.
-- **Security** – strong authentication and RBAC/ABAC.
-- **Reliability** – clear error handling and retry strategies.
-- **Performance** – efficient DB access and caching where needed.
-- **Observability** – logs, metrics and traces per tenant.
+## Data Flow per Request
 
-This document should be updated continuously as the platform grows.
+```
+HTTP Request
+  → TenantFilter           (reads X-Tenant-ID → sets TenantContext)
+  → TenantAccessGuardFilter (validates tenant active)
+  → JwtAuthenticationFilter (validates token → sets SecurityContext)
+  → Controller              (maps HTTP → command / query)
+  → Service                 (business logic, @Transactional boundary)
+  → Repository              (JPA, filtered by tenant_id via Hibernate)
+  → PostgreSQL
+```
+
+## Technology Decisions
+
+| Decision | Choice | Reason |
+|---|---|---|
+| Language | Java 21 | LTS, virtual threads ready |
+| Framework | Spring Boot 3.3 | Mature ecosystem + Spring Security |
+| DB migration | Flyway 10 | Simple, SQL-based, 90 migrations |
+| Cache | Redis | Query caching, session data |
+| Auth | Stateless JWT | No session state, horizontal scale |
+| Multitenancy | Shared DB + `tenant_id` filter | Simple to operate |
+| Payments | Culqi | Peruvian market |
+| Reports | PDFBox + Apache POI | PDF report cards, Excel exports |
+
+## Non-Functional Characteristics
+
+- **Scalability** — stateless backend, horizontal scaling possible
+- **Security** — RBAC + ACL + audit logging + tenant isolation
+- **Performance** — Redis caching, Hibernate filters
+- **Observability** — audit events per tenant, `/actuator/health`
+- **Testability** — TestContainers for PostgreSQL integration tests
