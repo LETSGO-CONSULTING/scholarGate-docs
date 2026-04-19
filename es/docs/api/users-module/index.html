@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-api/users-module" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Módulo Usuarios (ScholarGate) | scholarGate Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://letsgo-consulting.github.io/scholarGate-docs/es/docs/api/users-module"><meta data-rh="true" property="og:locale" content="es"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" property="og:locale:alternate" content="pt"><meta data-rh="true" name="docusaurus_locale" content="es"><meta data-rh="true" name="docsearch:language" content="es"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Módulo Usuarios (ScholarGate) | scholarGate Docs"><meta data-rh="true" name="description" content="Alcance"><meta data-rh="true" property="og:description" content="Alcance"><link data-rh="true" rel="icon" href="/scholarGate-docs/es/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://letsgo-consulting.github.io/scholarGate-docs/es/docs/api/users-module"><link data-rh="true" rel="alternate" href="https://letsgo-consulting.github.io/scholarGate-docs/docs/api/users-module" hreflang="en"><link data-rh="true" rel="alternate" href="https://letsgo-consulting.github.io/scholarGate-docs/es/docs/api/users-module" hreflang="es"><link data-rh="true" rel="alternate" href="https://letsgo-consulting.github.io/scholarGate-docs/pt/docs/api/users-module" hreflang="pt"><link data-rh="true" rel="alternate" href="https://letsgo-consulting.github.io/scholarGate-docs/docs/api/users-module" hreflang="x-default"><link rel="stylesheet" href="/scholarGate-docs/es/assets/css/styles.4b4b22b5.css">
+<script src="/scholarGate-docs/es/assets/js/runtime~main.bc96c015.js" defer="defer"></script>
+<script src="/scholarGate-docs/es/assets/js/main.2f137cf0.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/scholarGate-docs/es/img/logo.svg"><div role="region" aria-label="Saltar al contenido principal"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Saltar al contenido principal</a></div><nav aria-label="Principal" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Alternar barra lateral" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/scholarGate-docs/es/"><div class="navbar__logo"><img src="/scholarGate-docs/es/img/logo.svg" alt="scholarGate Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/scholarGate-docs/es/img/logo.svg" alt="scholarGate Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">scholarGate</b></a><a class="navbar__item navbar__link" href="/scholarGate-docs/es/docs/introduction">Docs</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/orgs/LETSGO-CONSULTING/repositories" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Cambiar entre modo oscuro y claro (actualmente system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Volver al principio" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><main class="docMainContainer_TBSr docMainContainerEnhanced_lQrH"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">En esta página</button></div><div class="theme-doc-markdown markdown"><header><h1>Módulo Usuarios (ScholarGate)</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="alcance">Alcance<a href="#alcance" class="hash-link" aria-label="Enlace directo al Alcance" title="Enlace directo al Alcance" translate="no">​</a></h2>
+<p>Módulo completo de usuarios con CRUD, filtros, invitaciones, auditoría, perfil escolar extendido, permisos granulares, seguridad avanzada, acciones bulk y exportaciones.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rest-api">REST API<a href="#rest-api" class="hash-link" aria-label="Enlace directo al REST API" title="Enlace directo al REST API" translate="no">​</a></h2>
+<p>Base: <code>/api/v1</code></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="usuarios">Usuarios<a href="#usuarios" class="hash-link" aria-label="Enlace directo al Usuarios" title="Enlace directo al Usuarios" translate="no">​</a></h3>
+<ul>
+<li class=""><code>GET /users</code>
+<ul>
+<li class="">Query params: <code>email</code>, <code>name</code>, <code>role</code>, <code>status</code>, <code>q</code>, <code>page</code>, <code>size</code></li>
+<li class="">Respuesta: <code>UserPageResponse</code></li>
+</ul>
+</li>
+<li class=""><code>POST /users</code>
+<ul>
+<li class="">Crea usuario (nombre, email, estado, roles múltiples, flags de seguridad, perfil, overrides de permisos).</li>
+</ul>
+</li>
+<li class=""><code>PATCH /users/{userId}</code>
+<ul>
+<li class="">Actualiza usuario.</li>
+</ul>
+</li>
+<li class=""><code>PATCH /users/{userId}/password</code>
+<ul>
+<li class="">Resetea contraseña y permite forzar cambio en primer login.</li>
+</ul>
+</li>
+<li class=""><code>PATCH /users/{userId}/security</code>
+<ul>
+<li class="">Gestiona seguridad: desbloqueo, 2FA, forzar cambio, nueva contraseña.</li>
+</ul>
+</li>
+<li class=""><code>DELETE /users/{userId}</code>
+<ul>
+<li class="">Elimina usuario.</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="auditoría-e-historial">Auditoría e historial<a href="#auditoría-e-historial" class="hash-link" aria-label="Enlace directo al Auditoría e historial" title="Enlace directo al Auditoría e historial" translate="no">​</a></h3>
+<ul>
+<li class=""><code>GET /users/{userId}/history</code>
+<ul>
+<li class="">Historial de cambios de usuario (roles/estado/campos relevantes).</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="sesiones">Sesiones<a href="#sesiones" class="hash-link" aria-label="Enlace directo al Sesiones" title="Enlace directo al Sesiones" translate="no">​</a></h3>
+<ul>
+<li class=""><code>GET /users/{userId}/sessions</code>
+<ul>
+<li class="">Lista sesiones activas.</li>
+</ul>
+</li>
+<li class=""><code>DELETE /users/{userId}/sessions</code>
+<ul>
+<li class="">Revoca todas las sesiones.</li>
+</ul>
+</li>
+<li class=""><code>DELETE /users/{userId}/sessions/{sessionId}</code>
+<ul>
+<li class="">Revoca sesión específica.</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="acciones-masivas">Acciones masivas<a href="#acciones-masivas" class="hash-link" aria-label="Enlace directo al Acciones masivas" title="Enlace directo al Acciones masivas" translate="no">​</a></h3>
+<ul>
+<li class=""><code>POST /users/bulk</code>
+<ul>
+<li class="">Acciones: <code>ACTIVATE</code>, <code>DEACTIVATE</code>, <code>ASSIGN_ROLE</code>, <code>DELETE</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="exportaciones">Exportaciones<a href="#exportaciones" class="hash-link" aria-label="Enlace directo al Exportaciones" title="Enlace directo al Exportaciones" translate="no">​</a></h3>
+<ul>
+<li class=""><code>GET /users/export/csv</code></li>
+<li class=""><code>GET /users/export/excel</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="invitaciones">Invitaciones<a href="#invitaciones" class="hash-link" aria-label="Enlace directo al Invitaciones" title="Enlace directo al Invitaciones" translate="no">​</a></h3>
+<ul>
+<li class=""><code>GET /user-invitations</code>
+<ul>
+<li class="">Query params: <code>status</code>, <code>page</code>, <code>size</code></li>
+</ul>
+</li>
+<li class=""><code>POST /user-invitations</code>
+<ul>
+<li class="">Envía invitación por email.</li>
+</ul>
+</li>
+<li class=""><code>PATCH /user-invitations/{invitationId}/resend</code>
+<ul>
+<li class="">Reenvía invitación.</li>
+</ul>
+</li>
+<li class=""><code>PATCH /user-invitations/{invitationId}/cancel</code>
+<ul>
+<li class="">Cancela invitación.</li>
+</ul>
+</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="estados-y-reglas">Estados y reglas<a href="#estados-y-reglas" class="hash-link" aria-label="Enlace directo al Estados y reglas" title="Enlace directo al Estados y reglas" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="estado-usuario">Estado usuario<a href="#estado-usuario" class="hash-link" aria-label="Enlace directo al Estado usuario" title="Enlace directo al Estado usuario" translate="no">​</a></h3>
+<ul>
+<li class=""><code>ACTIVE</code>, <code>INACTIVE</code>, <code>SUSPENDED</code>, <code>PENDING</code>, <code>BLOCKED</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="estado-invitación">Estado invitación<a href="#estado-invitación" class="hash-link" aria-label="Enlace directo al Estado invitación" title="Enlace directo al Estado invitación" translate="no">​</a></h3>
+<ul>
+<li class=""><code>PENDING</code>, <code>ACCEPTED</code>, <code>EXPIRED</code>, <code>CANCELED</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="seguridad-implementada">Seguridad implementada<a href="#seguridad-implementada" class="hash-link" aria-label="Enlace directo al Seguridad implementada" title="Enlace directo al Seguridad implementada" translate="no">​</a></h3>
+<ul>
+<li class="">Política de contraseña reforzada (8-128, mayúscula, minúscula, número, símbolo).</li>
+<li class="">Forzar cambio de contraseña en primer login.</li>
+<li class="">Bloqueo temporal por intentos fallidos.</li>
+<li class="">2FA opcional por usuario.</li>
+<li class="">Gestión y revocación de sesiones.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="integraciones">Integraciones<a href="#integraciones" class="hash-link" aria-label="Enlace directo al Integraciones" title="Enlace directo al Integraciones" translate="no">​</a></h2>
+<ul>
+<li class="">ACL de roles (<code>security/acl</code>) + overrides de permisos por usuario.</li>
+<li class="">Auditoría global (<code>audit_events</code>) para operaciones críticas.</li>
+<li class="">Contexto tenant y relaciones con perfiles escolares.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="graphql-contrato-equivalente-recomendado">GraphQL (contrato equivalente recomendado)<a href="#graphql-contrato-equivalente-recomendado" class="hash-link" aria-label="Enlace directo al GraphQL (contrato equivalente recomendado)" title="Enlace directo al GraphQL (contrato equivalente recomendado)" translate="no">​</a></h2>
+<p>El backend actual expone REST. Para GraphQL se recomienda mapear:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="query">Query<a href="#query" class="hash-link" aria-label="Enlace directo al Query" title="Enlace directo al Query" translate="no">​</a></h3>
+<ul>
+<li class=""><code>users(filter, page, size): UserPage</code></li>
+<li class=""><code>userInvitations(filter, page, size): UserInvitationPage</code></li>
+<li class=""><code>userHistory(userId, size): [UserHistoryEntry!]!</code></li>
+<li class=""><code>userSessions(userId): [UserSession!]!</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="mutation">Mutation<a href="#mutation" class="hash-link" aria-label="Enlace directo al Mutation" title="Enlace directo al Mutation" translate="no">​</a></h3>
+<ul>
+<li class=""><code>createUser(input): CreateUserPayload</code></li>
+<li class=""><code>updateUser(userId, input): User</code></li>
+<li class=""><code>resetUserPassword(userId, input): User</code></li>
+<li class=""><code>manageUserSecurity(userId, input): User</code></li>
+<li class=""><code>deleteUser(userId): Boolean</code></li>
+<li class=""><code>bulkUsers(input): BulkUserActionResult</code></li>
+<li class=""><code>sendUserInvitation(input): UserInvitation</code></li>
+<li class=""><code>resendUserInvitation(invitationId): UserInvitation</code></li>
+<li class=""><code>cancelUserInvitation(invitationId): UserInvitation</code></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Página del documento"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#alcance" class="table-of-contents__link toc-highlight">Alcance</a></li><li><a href="#rest-api" class="table-of-contents__link toc-highlight">REST API</a><ul><li><a href="#usuarios" class="table-of-contents__link toc-highlight">Usuarios</a></li><li><a href="#auditoría-e-historial" class="table-of-contents__link toc-highlight">Auditoría e historial</a></li><li><a href="#sesiones" class="table-of-contents__link toc-highlight">Sesiones</a></li><li><a href="#acciones-masivas" class="table-of-contents__link toc-highlight">Acciones masivas</a></li><li><a href="#exportaciones" class="table-of-contents__link toc-highlight">Exportaciones</a></li><li><a href="#invitaciones" class="table-of-contents__link toc-highlight">Invitaciones</a></li></ul></li><li><a href="#estados-y-reglas" class="table-of-contents__link toc-highlight">Estados y reglas</a><ul><li><a href="#estado-usuario" class="table-of-contents__link toc-highlight">Estado usuario</a></li><li><a href="#estado-invitación" class="table-of-contents__link toc-highlight">Estado invitación</a></li><li><a href="#seguridad-implementada" class="table-of-contents__link toc-highlight">Seguridad implementada</a></li></ul></li><li><a href="#integraciones" class="table-of-contents__link toc-highlight">Integraciones</a></li><li><a href="#graphql-contrato-equivalente-recomendado" class="table-of-contents__link toc-highlight">GraphQL (contrato equivalente recomendado)</a><ul><li><a href="#query" class="table-of-contents__link toc-highlight">Query</a></li><li><a href="#mutation" class="table-of-contents__link toc-highlight">Mutation</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/scholarGate-docs/es/docs/introduction">Introduction</a></li><li class="footer__item"><a class="footer__link-item" href="/scholarGate-docs/es/docs/architecture/architecture-overview">Architecture</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/LETSGO-Automation" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">© 2026 scholarGate.</div></div></div></footer></div>
+</body>
+</html>
