@@ -12,7 +12,7 @@ const config: Config = {
     url: 'https://letsgo-consulting.github.io',
     baseUrl: '/scholarGate-docs/',
 
-    organizationName: 'LETSGO-CONSULTING',
+    organizationName: 'brucelabs-tech',
     projectName: 'scholarGate-docs',
 
     onBrokenLinks: 'throw',
@@ -52,7 +52,7 @@ const config: Config = {
                     label: 'Docs',
                 },
                 {
-                    href: 'https://github.com/orgs/LETSGO-CONSULTING/repositories',
+                    href: 'https://github.com/orgs/brucelabs-tech/repositories',
                     label: 'GitHub',
                     position: 'right',
                 },
